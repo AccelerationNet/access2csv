@@ -36,9 +36,27 @@ Export one table:
 	1,"foo"
 	2,"bar"
 
+## Installation
+
+Binaries are available at
+https://github.com/AccelerationNet/access2csv/releases, download a jar
+file from there then use it as shown above.
+
+### Compile from source
+
+    $ git clone https://github.com/AccelerationNet/access2csv.git
+	$ cd access2csv
+	$ ant
+	
+Now you should have an `access2csv.jar`, ready to go.
+
 ## Depenencies
 
  * [Jackess](http://jackcess.sourceforge.net/) - a pure Java library
    for reading from and writing to MS Access databases
  * [opencsv](http://opencsv.sourceforge.net/) - CSV library
 
+## Contributing
+
+Use https://github.com/AccelerationNet/access2csv to open issues or
+pull requests.
