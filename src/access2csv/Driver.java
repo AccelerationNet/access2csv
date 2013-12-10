@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -19,20 +21,20 @@ public class Driver {
 		CSVWriter writer = new CSVWriter(new BufferedWriter(csv));		
 		int rows = 0;
 		try{
-		for(Row row : table){
-			int i = 0;
-			for (Object object : row.values()) {
-				buffer[i++] = object == null ? null : object.toString();
+			for(Row row : table){
+				int i = 0;
+				for (Object object : row.values()) {
+					buffer[i++] = object == null ? null : object.toString();
+				}
+				writer.writeNext(buffer);
+				rows++;
 			}
-			writer.writeNext(buffer);
-			rows++;
-		}
 		}finally{			
 			writer.close();
 		}
 		return rows;
 	}
-	
+
 	static void export(String filename, String tableName) throws IOException{
 		Database db = DatabaseBuilder.open(new File(filename));
 		try{
@@ -41,9 +43,9 @@ public class Driver {
 			db.close();
 		}
 	}
-	
+
 	static void schema(String filename) throws IOException{
-				
+
 		Database db = DatabaseBuilder.open(new File(filename));
 		try{
 			for(String tableName : db.getTableNames()){
@@ -58,9 +60,9 @@ public class Driver {
 		}finally{
 			db.close();
 		}
-				
+
 	}
-	
+
 	static void exportAll(String filename) throws IOException{
 		Database db = DatabaseBuilder.open(new File(filename));
 		try{
@@ -79,21 +81,39 @@ public class Driver {
 					}catch(IOException ex){}
 				}
 			}
-			
 		}finally{
 			db.close();
-			
 		}
-		
+
 	}
-	
+
+	static void printUsage(){
+		System.out.println("Usage:");		
+		System.out.println(" java -jar access2csv.jar [ACCESS FILE] [OPTIONS]");
+		System.out.println("");
+		System.out.println("Options:");
+		System.out.println("");
+		System.out.println(" * if no options are provided, all tables will be exported to CSV files,");
+		System.out.println("   one file per table. Output file paths will be printed to stdout");
+		System.out.println(" * '--schema' - prints the database schema");
+		System.out.println(" * [TABLENAME] - prints the given table as CSV to stdout");
+	}
+
 	/**
 	 * @param args
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		
+		List<String> helpCommands = Arrays.asList(new String[]{"-h", "--help", "-H", "/?"});
+
+		if(args.length == 1 && helpCommands.contains(args[0])){			
+			printUsage();
+			System.exit(0);
+		}
+		if(args.length == 1 && args[0].equals("--schema")){
+			exportAll(args[0]);
+			System.exit(0);
+		}
 		if(args.length == 1){
 			exportAll(args[0]);
 			System.exit(0);
@@ -106,17 +126,8 @@ public class Driver {
 			export(args[0], args[1]);
 			System.exit(0);
 		}
-		
-		System.out.println("Invalid arguments. Usage:");		
-		System.out.println(" java -jar access2csv.jar [ACCESS FILE] [OPTIONS]");
-		System.out.println("");
-		System.out.println("Options:");
-		System.out.println("");
-		System.out.println(" * if no options are provided, all tables will be exported to CSV files,");
-		System.out.println("   one file per table. Output file paths will be printed to stdout");
-		System.out.println(" * '--schema' - prints the database schema");
-		System.out.println(" * [TABLENAME] - prints the given table as CSV to stdout");
-		
+		System.err.println("Invalid arguments.");
+		printUsage();		
 		System.exit(1);
 	}
 
