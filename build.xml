@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="create_run_jar" name="Create Runnable Jar for Project access2csv with Jar-in-Jar Loader">
+  <path id="classpath">
+    <fileset dir="lib" includes="**/*.jar"/>
+  </path>
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
-    <target name="create_run_jar">
+    <target name="create_run_jar" depends="compile">
         <jar destfile="access2csv.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
@@ -17,5 +20,9 @@
             <zipfileset dir="lib" includes="commons-lang-2.6.jar"/>
             <zipfileset dir="lib" includes="opencsv-2.3.jar"/>
         </jar>
+    </target>
+    <target name="compile">
+      <mkdir dir="bin"/>
+      <javac includeantruntime="false" srcdir="src" destdir="bin" classpathref="classpath"/>
     </target>
 </project>
