@@ -2,6 +2,7 @@ package access2csv;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.opencsv.CSVWriter;
+
+import joptsimple.OptionException;
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionSpec;
 
 import com.healthmarketscience.jackcess.*;
 
@@ -43,18 +49,18 @@ public class Driver {
 		return rows;
 	}
 
-	static void export(String filename, String tableName) throws IOException{
-		Database db = DatabaseBuilder.open(new File(filename));
+	static void export(File inputFile, String tableName, File outputDir) throws IOException{
+		Database db = DatabaseBuilder.open(inputFile);
 		try{
-			export(db, tableName, new PrintWriter(System.out), false);
+			export(db, tableName, new FileWriter(new File(outputDir, tableName + ".csv")), false);
 		}finally{
 			db.close();
 		}
 	}
 
-	static void schema(String filename) throws IOException{
+	static void schema(File inputFile) throws IOException{
 
-		Database db = DatabaseBuilder.open(new File(filename));
+		Database db = DatabaseBuilder.open(inputFile);
 		try{
 			for(String tableName : db.getTableNames()){
 				Table table = db.getTable(tableName);
@@ -71,12 +77,12 @@ public class Driver {
 
 	}
 
-	static void exportAll(String filename, boolean withHeader) throws IOException{
-		Database db = DatabaseBuilder.open(new File(filename));
+	static void exportAll(File inputFile, boolean withHeader, File outputDir) throws IOException{
+		Database db = DatabaseBuilder.open(inputFile);
 		try{
 			for(String tableName : db.getTableNames()){
 				String csvName = tableName + ".csv";
-				Writer csv = new FileWriter(csvName);
+				Writer csv = new FileWriter(new File(outputDir, csvName));
 				try{
 					System.out.println(String.format("Exporting '%s' to %s/%s",
 							tableName, System.getProperty("user.dir"), csvName));
@@ -115,28 +121,50 @@ public class Driver {
 	public static void main(String[] args) throws Exception {
 		List<String> helpCommands = Arrays.asList(new String[]{"-h", "--help", "-H", "/?"});
 
-		if(args.length == 1 && helpCommands.contains(args[0])){
-			printUsage();
+		final OptionParser parser = new OptionParser();
+
+		final OptionSpec<Void> help = parser.acceptsAll(Arrays.asList("help")).forHelp();
+		final OptionSpec<Void> schema = parser.accepts("schema");
+		final OptionSpec<Void> withHeader = parser.accepts("with-header");
+		final OptionSpec<File> input = parser.accepts("input").withRequiredArg().ofType(File.class).required()
+				.describedAs("The input accdb file.");
+		final OptionSpec<String> table = parser.accepts("table").withRequiredArg().ofType(String.class).describedAs("The table name to export, or all if it is not specified.");
+		final OptionSpec<File> output = parser.accepts("output").withRequiredArg().ofType(File.class).required()
+				.describedAs("The output directory.");
+
+		OptionSet options = null;
+
+		try {
+			options = parser.parse(args);
+		} catch (final OptionException e) {
+			System.out.println(e.getMessage());
+			parser.printHelpOn(System.out);
+			throw e;
 		}
-		else if(args.length == 1 && args[0].equals("--schema")){
-			exportAll(args[0], false);
+
+		if (options.has(help)) {
+			parser.printHelpOn(System.out);
+			return;
 		}
-		else if(args.length == 2 && args[1].equals("--with-header")){
-			exportAll(args[0], true);
+
+		File inputFile = input.value(options);
+		if(!inputFile.exists()) {
+			throw new FileNotFoundException("Could not find input file: " + inputFile.toString());
 		}
-		else if(args.length == 1){
-			exportAll(args[0], false);
+		
+		File outputDir = output.value(options);
+		if(!outputDir.exists()) {
+			outputDir.mkdirs();
 		}
-		else if(args.length == 2 && args[1].equals("--schema")){
-			schema(args[0]);
+		
+		if(options.has(schema)) {
+			exportAll(inputFile, options.has(withHeader), outputDir);
 		}
-		else if(args.length == 2){
-			export(args[0], args[1]);
+		else if (options.has(table)){
+			export(inputFile, table.value(options), outputDir);
 		}
 		else {
-			System.err.println("Invalid arguments.");
-			printUsage();
-			throw new RuntimeException("Invalid arguments given: " + Arrays.asList(args));
+			exportAll(inputFile, false, outputDir);
 		}
 	}
 

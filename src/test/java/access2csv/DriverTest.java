@@ -88,8 +88,6 @@ public class DriverTest {
 	public final void testMainHelp() throws Exception {
 		Driver.main(new String[] { "--help" });
 		Driver.main(new String[] { "-h" });
-		Driver.main(new String[] { "-H" });
-		Driver.main(new String[] { "/?" });
 	}
 
 	/**
@@ -98,7 +96,7 @@ public class DriverTest {
 	@Test
 	public final void testMainSchemaMissingDatabase() throws Exception {
 		thrown.expect(FileNotFoundException.class);
-		Driver.main(new String[] { "does-not-exist.accdb", "--schema" });
+		Driver.main(new String[] { "--input", "does-not-exist.accdb", "--schema" , "--output", new File(testDir, "dir-does-not-exist").toString()});
 	}
 
 	/**
@@ -107,7 +105,7 @@ public class DriverTest {
 	@Test
 	public final void testHeaderMissingDatabase() throws Exception {
 		thrown.expect(FileNotFoundException.class);
-		Driver.main(new String[] { "does-not-exist.accdb", "--with-header" });
+		Driver.main(new String[] { "--input", "does-not-exist.accdb", "--with-header" , "--output", new File(testDir, "dir-does-not-exist").toString()});
 	}
 
 }
