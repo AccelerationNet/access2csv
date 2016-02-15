@@ -6,8 +6,5 @@ cache:
 jdk:
   - oraclejdk7
   - oraclejdk8
-notifications:
-  email:
-    - ansell.peter@gmail.com
 after_success:
   - mvn clean test jacoco:report coveralls:report
