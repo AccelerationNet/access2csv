@@ -1,0 +1,13 @@
+#!/bin/bash
+# This script runs the Access 2 CSV code.
+# Before running this script for the first time 
+# you may need to run:
+#     chmod +x access2csv
+#
+
+if [ ! -d "target/appassembler/bin" ]; then
+    mvn -quiet clean install -DskipTests -Djetty.skip
+fi
+
+chmod u+x target/appassembler/bin/*
+target/appassembler/bin/access2csv "$@"
