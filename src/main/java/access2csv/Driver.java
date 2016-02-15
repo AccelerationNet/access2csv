@@ -9,7 +9,7 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 
 import com.healthmarketscience.jackcess.*;
 
