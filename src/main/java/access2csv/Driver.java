@@ -102,26 +102,7 @@ public class Driver {
 
 	}
 
-	static void printUsage(){
-		System.out.println("Usage:");
-		System.out.println(" java -jar access2csv.jar [ACCESS FILE] [OPTIONS]");
-		System.out.println("");
-		System.out.println("Options:");
-		System.out.println("");
-		System.out.println(" * if no options are provided, all tables will be exported to CSV files,");
-		System.out.println("   one file per table. Output file paths will be printed to stdout");
-		System.out.println(" * '--schema' - prints the database schema");
-		System.out.println(" * '--with-header' - export the header with the field names");
-		System.out.println(" * [TABLENAME] - prints the given table as CSV to stdout");
-	}
-
-	/**
-	 * @param args
-	 * @throws IOException 
-	 */
 	public static void main(String[] args) throws Exception {
-		List<String> helpCommands = Arrays.asList(new String[]{"-h", "--help", "-H", "/?"});
-
 		final OptionParser parser = new OptionParser();
 
 		final OptionSpec<Void> help = parser.acceptsAll(Arrays.asList("help")).forHelp();
