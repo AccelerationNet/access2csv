@@ -82,10 +82,11 @@ public class Driver {
 		try{
 			for(String tableName : db.getTableNames()){
 				String csvName = tableName + ".csv";
-				Writer csv = new FileWriter(new File(outputDir, csvName));
+				File outputFile = new File(outputDir, csvName);
+				Writer csv = new FileWriter(outputFile);
 				try{
-					System.out.println(String.format("Exporting '%s' to %s/%s",
-							tableName, System.getProperty("user.dir"), csvName));
+					System.out.println(String.format("Exporting '%s' to %s",
+							tableName, outputFile.toString()));
 					int rows = export(db, tableName, csv, withHeader);
 					System.out.println(String.format("%d rows exported", rows));
 				}finally{
