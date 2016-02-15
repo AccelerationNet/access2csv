@@ -74,14 +74,6 @@ public class DriverTest {
 	}
 
 	/**
-	 * Test method for {@link access2csv.Driver#printUsage()}.
-	 */
-	@Test
-	public final void testPrintUsage() throws Exception {
-		Driver.printUsage();
-	}
-
-	/**
 	 * Test method for {@link access2csv.Driver#main(java.lang.String[])}.
 	 */
 	@Test
