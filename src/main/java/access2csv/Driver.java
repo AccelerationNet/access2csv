@@ -112,36 +112,32 @@ public class Driver {
 	 * @param args
 	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		List<String> helpCommands = Arrays.asList(new String[]{"-h", "--help", "-H", "/?"});
 
 		if(args.length == 1 && helpCommands.contains(args[0])){
 			printUsage();
-			System.exit(0);
 		}
-		if(args.length == 1 && args[0].equals("--schema")){
+		else if(args.length == 1 && args[0].equals("--schema")){
 			exportAll(args[0], false);
-			System.exit(0);
 		}
-		if(args.length == 2 && args[1].equals("--with-header")){
+		else if(args.length == 2 && args[1].equals("--with-header")){
 			exportAll(args[0], true);
-			System.exit(0);
 		}
-		if(args.length == 1){
+		else if(args.length == 1){
 			exportAll(args[0], false);
-			System.exit(0);
 		}
 		else if(args.length == 2 && args[1].equals("--schema")){
 			schema(args[0]);
-			System.exit(0);
 		}
 		else if(args.length == 2){
 			export(args[0], args[1]);
-			System.exit(0);
 		}
-		System.err.println("Invalid arguments.");
-		printUsage();
-		System.exit(1);
+		else {
+			System.err.println("Invalid arguments.");
+			printUsage();
+			throw new RuntimeException("Invalid arguments given: " + Arrays.asList(args));
+		}
 	}
 
 }
