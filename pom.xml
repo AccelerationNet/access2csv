@@ -2,25 +2,25 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.ansell.access2csv</groupId>
+	<groupId>com.github.AccelerationNet.access2csv</groupId>
 	<artifactId>access2csv</artifactId>
 	<version>0.2-SNAPSHOT</version>
 	<name>Access to CSV</name>
 	<description>Converter from Access to CSV</description>
 	<packaging>jar</packaging>
 
-	<url>https://github.com/ansell/access2csv/</url>
+	<url>https://github.com/AccelerationNet/access2csv/</url>
 	<licenses>
 		<license>
 			<name>MIT License</name>
-			<url>https://github.com/ansell/access2csv/blob/master/LICENSE</url>
+			<url>https://github.com/AccelerationNet/access2csv/blob/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<scm>
-		<url>git@github.com:ansell/access2csv.git</url>
-		<connection>scm:git:git@github.com:ansell/access2csv.git</connection>
-		<developerConnection>scm:git:git@github.com:ansell/access2csv.git</developerConnection>
+		<url>git@github.com:AccelerationNet/access2csv.git</url>
+		<connection>scm:git:git@github.com:AccelerationNet/access2csv.git</connection>
+		<developerConnection>scm:git:git@github.com:AccelerationNet/access2csv.git</developerConnection>
 	</scm>
 	<developers>
 		<developer>

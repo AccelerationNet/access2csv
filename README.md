@@ -12,7 +12,7 @@ Simple program to extract data from Access databases into CSV files.
 
 Dumping a schema:
 
-    $ java -jar access2csv.jar myfile.accdb --schema	
+    $ ./access2csv myfile.accdb --schema	
 	CREATE TABLE Test(
 		Id INT,
 		Name TEXT,
@@ -24,7 +24,7 @@ Dumping a schema:
 	
 Exporting all tables:
 
-    $ java -jar access2csv.jar myfile.accdb
+    $ ./access2csv myfile.accdb
 	Exporting 'Test' to /home/ryepup/Test.csv
 	2 rows exported
 	Exporting 'Test2' to /home/ryepup/Test2.csv
@@ -32,7 +32,7 @@ Exporting all tables:
 	
 Export one table:
 
-    $ java -jar access2csv.jar myfile.accdb Test
+    $ ./access2csv myfile.accdb Test
 	1,"foo"
 	2,"bar"
 
@@ -45,10 +45,10 @@ file from there then use it as shown above.
 ### Compile from source
 
     $ git clone https://github.com/AccelerationNet/access2csv.git
-	$ cd access2csv
-	$ ant
+    $ cd access2csv
+    $ mvn clean install
 	
-Now you should have an `access2csv.jar`, ready to go.
+Now you should have a `access2csv.jar` in the target directory, ready to go.
 
 ## Depenencies
 
