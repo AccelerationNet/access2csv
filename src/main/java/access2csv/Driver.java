@@ -49,10 +49,10 @@ public class Driver {
 		return rows;
 	}
 
-	static void export(File inputFile, String tableName, File outputDir) throws IOException{
+	static void export(File inputFile, String tableName, File outputDir, String csvPrefix) throws IOException{
 		Database db = DatabaseBuilder.open(inputFile);
 		try{
-			export(db, tableName, new FileWriter(new File(outputDir, tableName + ".csv")), false);
+			export(db, tableName, new FileWriter(new File(outputDir, csvPrefix + tableName + ".csv")), false);
 		}finally{
 			db.close();
 		}
@@ -77,11 +77,11 @@ public class Driver {
 
 	}
 
-	static void exportAll(File inputFile, boolean withHeader, File outputDir) throws IOException{
+	static void exportAll(File inputFile, boolean withHeader, File outputDir, String csvPrefix) throws IOException{
 		Database db = DatabaseBuilder.open(inputFile);
 		try{
 			for(String tableName : db.getTableNames()){
-				String csvName = tableName + ".csv";
+				String csvName = csvPrefix + tableName + ".csv";
 				File outputFile = new File(outputDir, csvName);
 				Writer csv = new FileWriter(outputFile);
 				try{
@@ -113,6 +113,7 @@ public class Driver {
 		final OptionSpec<String> table = parser.accepts("table").withRequiredArg().ofType(String.class).describedAs("The table name to export, or all if it is not specified.");
 		final OptionSpec<File> output = parser.accepts("output").withRequiredArg().ofType(File.class).required()
 				.describedAs("The output directory.");
+		final OptionSpec<String> csvPrefix = parser.accepts("csv-prefix").withRequiredArg().ofType(String.class).defaultsTo("").describedAs("A prefix to add to all of the generated CSV file names");
 
 		OptionSet options = null;
 
@@ -140,13 +141,13 @@ public class Driver {
 		}
 		
 		if(options.has(schema)) {
-			exportAll(inputFile, options.has(withHeader), outputDir);
+			exportAll(inputFile, options.has(withHeader), outputDir, csvPrefix.value(options));
 		}
 		else if (options.has(table)){
-			export(inputFile, table.value(options), outputDir);
+			export(inputFile, table.value(options), outputDir, csvPrefix.value(options));
 		}
 		else {
-			exportAll(inputFile, false, outputDir);
+			exportAll(inputFile, false, outputDir, csvPrefix.value(options));
 		}
 	}
 
