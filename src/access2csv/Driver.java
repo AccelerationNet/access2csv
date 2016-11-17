@@ -44,29 +44,23 @@ public class Driver {
 		return rows;
 	}
 	
-	static Database openDatabase( String filename, String db_passwd ) {
-		Database db = new DatabaseBuilder() ;
-		try{ 
-			if( db_passwd.equals("")) {
-				db = DatabaseBuilder.open(new File(filename));
-				return( db ) ;
-			} else {
-				db = new DatabaseBuilder(new File(filename))
-					.setCodecProvider(new CryptCodecProvider(db_passwd))
-					.open();
-				return( db ) ;
-			}
-		} catch(IOException ex){
-			System.err.println("Couldn't open the database");
-			return(db) ;
-		} ;
+	static Database openDatabase( String filename, String db_passwd ) throws IOException{
+		if( db_passwd.equals("")) {
+			Database db = DatabaseBuilder.open(new File(filename));
+			return( db ) ;
+		} else {
+			Database db = new DatabaseBuilder(new File(filename))
+				.setCodecProvider(new CryptCodecProvider(db_passwd))
+				.open();
+			return( db ) ;
+		}
 	}
 
 	static void export(String filename, String tableName, String db_passwd) throws IOException{
 		Database db = openDatabase( filename, db_passwd ) ;
 		
 		try{
-			export(db, tableName, new PrintWriter(System.out), false);
+			export(db, tableName, new PrintWriter(System.out), true);
 		}finally{
 			db.close();
 		}
@@ -136,7 +130,7 @@ public class Driver {
 	 */
 	public static void main(String[] cmdLineArgs) throws IOException {
 		List<String> helpCommands = Arrays.asList(new String[]{"-h", "--help", "-H", "/?"});
-		List<String> passwdCommands = Arrays.asList(new String[]{"-p", "--password", "-passwd"});
+		List<String> passwdCommands = Arrays.asList(new String[]{"-p", "--password", "--passwd"});
 		
 		// Make a copy of the command line args and then
 		// process them to remove and record any passwords
@@ -187,5 +181,4 @@ public class Driver {
 		printUsage();
 		System.exit(1);
 	}
-
 }
