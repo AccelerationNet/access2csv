@@ -2,9 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackcess-2.0.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/opencsv-2.3.jar"/>
+	<classpathentry kind="lib" path="/Users/mark/Current_projects/access2csv/lib/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="/Users/mark/Current_projects/access2csv/lib/opencsv-3.8.jar"/>
+	<classpathentry kind="lib" path="/Users/mark/Current_projects/access2csv/lib/jackcess-encrypt-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/mark/Current_projects/access2csv/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/mark/Current_projects/access2csv/lib/jackcess-2.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
