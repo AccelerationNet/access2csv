@@ -50,10 +50,10 @@ public class Driver {
 		return rows;
 	}
 
-	static void export(File inputFile, String tableName, File outputDir, String csvPrefix, boolean applyQuotesToAll, String nullText) throws IOException{
+	static void export(File inputFile, String tableName, boolean withHeader, File outputDir, String csvPrefix, boolean applyQuotesToAll, String nullText) throws IOException{
 		Database db = DatabaseBuilder.open(inputFile);
 		try{
-			export(db, tableName, new FileWriter(new File(outputDir, csvPrefix + tableName + ".csv")), false, applyQuotesToAll, nullText);
+			export(db, tableName, new FileWriter(new File(outputDir, csvPrefix + tableName + ".csv")), withHeader, applyQuotesToAll, nullText);
 		}finally{
 			db.close();
 		}
@@ -173,7 +173,7 @@ public class Driver {
 		
 		if (null != outputDir) {
 			if (options.has(table)){
-				export(inputFile, table.value(options), outputDir, csvPrefix.value(options), applyQuotesToAll, nullText);
+				export(inputFile, table.value(options), options.has(withHeader), outputDir, csvPrefix.value(options), applyQuotesToAll, nullText);
 			}
 			else {
 				exportAll(inputFile, options.has(withHeader), outputDir, csvPrefix.value(options), applyQuotesToAll, nullText);
