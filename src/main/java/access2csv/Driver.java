@@ -153,19 +153,9 @@ public class Driver {
 				outputDir.mkdirs();
 			}	
 		}
-		
-		boolean applyQuotesToAll = true;
-			if (options.has(quoteAll)) {
-			applyQuotesToAll = quoteAll.value(options);
-		}
-    
-		String nullText = null;
-		if (options.has(writeNull)) {
-			nullText = writeNull.value(options);
-			if ("".equals(nullText)) {        
-				nullText = null;
-			}
-		}
+    		
+		boolean applyQuotesToAll = quoteAll.value(options);    
+    String nullText = writeNull.value(options);
     
 		if (options.has(schema)) {
 			schema(inputFile);
