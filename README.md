@@ -50,6 +50,11 @@ file from there then use it as shown above.
 	
 Now you should have a `access2csv.jar` in the target directory, ready to go.
 
+Note December, 2017. Things have changed a little. If nothing else works then, (after compiling with mvn clean install) try running something 
+like this (example of Windows batch file) in the root of the repository (replace the path\to\file):
+<pre> ".\target\appassembler\bin\access2csv.bat" --input ".\path\to\file" --output . --write-null NULL --quote-all false --schema --with-header </pre>
+
+
 ## Depenencies
 
  * [Jackess](http://jackcess.sourceforge.net/) - a pure Java library
