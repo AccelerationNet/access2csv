@@ -28,7 +28,7 @@ To Save the schema in a file:
 
 Exporting all tables:
 
-    $ ./access2csv myfile.accdb
+    $ ./access2csv --input=myfile.accdb --output=<output_location>
 	Exporting 'Test' to /home/ryepup/Test.csv
 	2 rows exported
 	Exporting 'Test2' to /home/ryepup/Test2.csv
