@@ -63,7 +63,7 @@ like this (example of Windows batch file) in the root of the repository (replace
 <pre> ".\target\appassembler\bin\access2csv.bat" --input ".\path\to\file" --output . --write-null NULL --quote-all false --schema --with-header </pre>
 
 
-## Depenencies
+## Dependencies
 
  * [Jackess](http://jackcess.sourceforge.net/) - a pure Java library
    for reading from and writing to MS Access databases
