@@ -12,7 +12,7 @@ Simple program to extract data from Access databases into CSV files.
 
 Dumping a schema:
 
-    $ ./access2csv myfile.accdb --schema	
+    $ ./access2csv --input=myfile.accdb --schema	
 	CREATE TABLE Test(
 		Id INT,
 		Name TEXT,
@@ -21,7 +21,11 @@ Dumping a schema:
 		Id INT,
 		Name TEXT
 	)
-	
+
+To Save the schema in a file:
+
+    $ ./access2csv --input=myfile.accdb --schema > schema_file_name
+
 Exporting all tables:
 
     $ ./access2csv myfile.accdb
