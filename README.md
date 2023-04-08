@@ -33,7 +33,17 @@ Exporting all tables:
 	2 rows exported
 	Exporting 'Test2' to /home/ryepup/Test2.csv
 	100000 rows exported
-	
+
+Command Options:
+   ```
+   --input // reuqired. input file location
+   --output // required. output file location
+   --write-null // optional. Default value for NULL. i.e NULL | "" | false | <anything> 
+   --quote-all // optional. false | true
+   --schema // optional. Dump the DB schema
+   --with-header // optional. Write CSV with header
+   ```
+
 Export one table:
 
     $ ./access2csv myfile.accdb Test
